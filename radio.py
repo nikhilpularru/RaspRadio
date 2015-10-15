@@ -37,3 +37,36 @@ def getTrack():
    print L
    print station
    print track
+
+
+os.system("mpc clear")
+os.system("sudo amixer set PCM -- 80%")
+os.system("mpc add http://icecast2.rte.ie/ieradio1")
+os.system("mpc add http://76.73.3.245:6969")
+os.system("mpc add http://listen.radionomy.com/the-smooth-lounge")
+os.system("mpc add http://radionova128.media.vistatec.ie:80")
+os.system("mpc add http://newstalk.fmstreams.com:8080")
+
+track_num = 1                                                     # Start off on Track number 1
+os.system("mpc play "+str(track_num))            # Tell the OS to Play it
+getTrack()                                                  # Send the Track info to the LCD
+
+while True:
+   key = getKey()                                                    # Do something if a key was pressed
+   if key == "RIGHT":
+      track_num += 1
+      if track_num > max_trax:
+         track_num = max_trax
+      os.system("mpc play " + str(track_num))
+      getTrack()
+   elif key == "LEFT":
+      track_num -= 1
+      if track_num < 1:
+         track_num = 1
+      os.system("mpc play " + str(track_num))
+      getTrack()
+   elif key == "SEL":
+      os.system("mpc toggle")
+      getTrack()
+   elif key == "UP":
+      os.system("sudo shutdown -h now")
